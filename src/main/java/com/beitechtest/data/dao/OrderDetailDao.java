@@ -7,13 +7,14 @@
  */
 package com.beitechtest.data.dao;
 
-import com.beitechtest.data.entities.OrderDetail;
+import com.beitechtest.data.entity.OrderDetail;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
  * @version: 1.0.1
  * @created: 04/07/2019 3:33 PM
  */
+@Transactional
 @Repository
 public class OrderDetailDao implements IOrderDetailDao {
 
@@ -47,26 +49,42 @@ public class OrderDetailDao implements IOrderDetailDao {
     }
 
     @Override
-    public OrderDetail findByProductDescription(String productDescription) {
+    public List<OrderDetail> findByOrderId(Integer orderId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        TypedQuery<OrderDetail> query = session.getNamedQuery("OrderDetail.findByOrderId");
+        query.setParameter("orderId", orderId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<OrderDetail> findByProductId(Integer productId) {
+        Session session = this.sessionFactory.getCurrentSession();
+        TypedQuery<OrderDetail> query = session.getNamedQuery("OrderDetail.findByProductId");
+        query.setParameter("productId", productId);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<OrderDetail> findByProductDescription(String productDescription) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<OrderDetail> query = session.getNamedQuery("OrderDetail.findByProductDescription");
         query.setParameter("productDescription", productDescription);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     @Override
-    public OrderDetail findByPrice(double price) {
+    public List<OrderDetail> findByPrice(double price) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<OrderDetail> query = session.getNamedQuery("OrderDetail.findByPrice");
         query.setParameter("price", price);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     @Override
-    public OrderDetail findByQuantity(int quantity) {
+    public List<OrderDetail> findByQuantity(int quantity) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<OrderDetail> query = session.getNamedQuery("OrderDetail.findByQuantity");
         query.setParameter("quantity", quantity);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 }

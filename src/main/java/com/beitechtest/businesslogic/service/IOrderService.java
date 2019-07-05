@@ -9,7 +9,7 @@
 
 package com.beitechtest.businesslogic.service;
 
-import com.beitechtest.data.entities.Order;
+import com.beitechtest.data.entity.Order;
 
 import java.util.Date;
 import java.util.List;
@@ -23,5 +23,5 @@ public interface IOrderService {
     List<Order> findAll();
     Order findByOrderId(Integer orderId);
     List<Order> findCustomerOrderByDate(Integer customerId, Date startDate, Date endDate);
-    boolean saveOrder(Order order);
+    Integer saveOrder(Order order);
 }

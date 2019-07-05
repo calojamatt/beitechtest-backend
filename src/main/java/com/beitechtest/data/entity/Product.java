@@ -5,22 +5,12 @@
  * Todos los Derechos Reservados.
  */
 
-package com.beitechtest.data.entities;
+package com.beitechtest.data.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -38,8 +28,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
     @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
     @NamedQuery(name = "Product.findByProductDescription", query = "SELECT p FROM Product p WHERE p.productDescription = :productDescription"),
-    @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price"),
-    @NamedQuery(name = "Product.findByCustomerId", query = "SELECT p FROM Product p WHERE p.customerList.customerId = :custemerId")})
+    @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price")
+    //,@NamedQuery(name = "Product.findByCustomerId", query = "SELECT p FROM Product p join p.customerList c  WHERE c.customertId = :custemerId")
+})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,10 +48,10 @@ public class Product implements Serializable {
     @Basic(optional = false)
     @Column(name = "price")
     private double price;
-    @ManyToMany(mappedBy = "productList")
-    private List<Customer> customerList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "productId")
-    private List<OrderDetail> orderDetailList;
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "productList")
+    private Set<Customer> customerList;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productId")
+    private Set<OrderDetail> orderDetailList;
 
     public Product() {
     }
@@ -109,20 +100,20 @@ public class Product implements Serializable {
     }
 
     @XmlTransient
-    public List<Customer> getCustomerList() {
+    public Set<Customer> getCustomerList() {
         return customerList;
     }
 
-    public void setCustomerList(List<Customer> customerList) {
+    public void setCustomerList(Set<Customer> customerList) {
         this.customerList = customerList;
     }
 
     @XmlTransient
-    public List<OrderDetail> getOrderDetailList() {
+    public Set<OrderDetail> getOrderDetailList() {
         return orderDetailList;
     }
 
-    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
+    public void setOrderDetailList(Set<OrderDetail> orderDetailList) {
         this.orderDetailList = orderDetailList;
     }
 
@@ -144,7 +135,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "com.beitechtest.data.entities.Product[ productId=" + productId + " ]";
+        return "com.beitechtest.data.entity.Product[ productId=" + productId + " ]";
     }
 
 }

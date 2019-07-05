@@ -9,7 +9,7 @@
 
 package com.beitechtest.data.dao;
 
-import com.beitechtest.data.entities.Order;
+import com.beitechtest.data.entity.Order;
 
 import java.util.Date;
 import java.util.List;
@@ -26,4 +26,5 @@ public interface IOrderDao {
     Order findByCreationDate(Date creationDate);
     Order findByDeliveryAddress(String deliveryAddress);
     Order findByTotal(double total);
+    Integer save(Order order);
 }

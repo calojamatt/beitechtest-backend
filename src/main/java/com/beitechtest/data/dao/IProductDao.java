@@ -9,7 +9,7 @@
 
 package com.beitechtest.data.dao;
 
-import com.beitechtest.data.entities.Product;
+import com.beitechtest.data.entity.Product;
 
 import java.util.List;
 

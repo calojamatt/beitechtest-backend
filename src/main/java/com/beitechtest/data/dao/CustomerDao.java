@@ -7,13 +7,14 @@
  */
 package com.beitechtest.data.dao;
 
-import com.beitechtest.data.entities.Customer;
+import com.beitechtest.data.entity.Customer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
  * @version: 1.0.1
  * @created: 04/07/2019 3:02 PM
  */
+@Transactional
 @Repository
 public class CustomerDao implements ICustomerDao {
 
@@ -42,7 +44,7 @@ public class CustomerDao implements ICustomerDao {
     public Customer findByCustomerId(Integer customerId) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Customer> query = session.getNamedQuery("Customer.findByCustomerId");
-        query.setParameter("id", customerId);
+        query.setParameter("customerId", customerId);
         return query.getSingleResult();
     }
 

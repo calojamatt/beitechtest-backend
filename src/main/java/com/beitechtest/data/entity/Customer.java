@@ -5,24 +5,16 @@
  * Todos los Derechos Reservados.
  */
 
-package com.beitechtest.data.entities;
+package com.beitechtest.data.entity;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import java.util.Set;
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -33,6 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "customer")
+@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
     @NamedQuery(name = "Customer.findByCustomerId", query = "SELECT c FROM Customer c WHERE c.customerId = :customerId"),
@@ -56,9 +49,10 @@ public class Customer implements Serializable {
         @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")}, inverseJoinColumns = {
         @JoinColumn(name = "product_id", referencedColumnName = "product_id")})
     @ManyToMany
-    private List<Product> productList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customerId")
-    private List<Order> orderList;
+    @Fetch(value = FetchMode.JOIN)
+    private Set<Product> productList;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "customerId")
+    private Set<Order> orderList;
 
     public Customer() {
     }
@@ -98,20 +92,20 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public List<Product> getProductList() {
+    public Set<Product> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<Product> productList) {
+    public void setProductList(Set<Product> productList) {
         this.productList = productList;
     }
 
     @XmlTransient
-    public List<Order> getOrderList() {
+    public Set<Order> getOrderList() {
         return orderList;
     }
 
-    public void setOrderList(List<Order> OrderList) {
+    public void setOrderList(Set<Order> OrderList) {
         this.orderList = orderList;
     }
 
@@ -133,7 +127,7 @@ public class Customer implements Serializable {
 
     @Override
     public String toString() {
-        return "com.beitechtest.data.entities.Customer[ customerId=" + customerId + " ]";
+        return "com.beitechtest.data.entity.Customer[ customerId=" + customerId + " ]";
     }
 
 }

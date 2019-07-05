@@ -7,7 +7,7 @@
  */
 package com.beitechtest.businesslogic.service;
 
-import com.beitechtest.data.entities.OrderDetail;
+import com.beitechtest.data.entity.OrderDetail;
 
 import java.util.List;
 

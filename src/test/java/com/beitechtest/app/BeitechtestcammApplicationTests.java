@@ -1,4 +1,4 @@
-package com.beitechtest;
+package com.beitechtest.app;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

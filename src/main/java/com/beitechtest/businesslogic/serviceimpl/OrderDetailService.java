@@ -9,7 +9,7 @@ package com.beitechtest.businesslogic.serviceimpl;
 
 import com.beitechtest.businesslogic.service.IOrderDetailService;
 import com.beitechtest.data.dao.OrderDetailDao;
-import com.beitechtest.data.entities.OrderDetail;
+import com.beitechtest.data.entity.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

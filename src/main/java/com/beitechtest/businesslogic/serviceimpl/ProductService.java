@@ -10,11 +10,10 @@ package com.beitechtest.businesslogic.serviceimpl;
 
 import com.beitechtest.businesslogic.service.IProductService;
 import com.beitechtest.data.dao.ProductDao;
-import com.beitechtest.data.entities.Product;
+import com.beitechtest.data.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**

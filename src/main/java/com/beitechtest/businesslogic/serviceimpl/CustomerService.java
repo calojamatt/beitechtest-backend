@@ -9,7 +9,7 @@ package com.beitechtest.businesslogic.serviceimpl;
 
 import com.beitechtest.businesslogic.service.ICustomerService;
 import com.beitechtest.data.dao.CustomerDao;
-import com.beitechtest.data.entities.Customer;
+import com.beitechtest.data.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

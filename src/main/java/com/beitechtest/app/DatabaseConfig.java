@@ -14,6 +14,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -30,40 +31,42 @@ import javax.sql.DataSource;
  */
 
 @Configuration
-@EntityScan("com.beitechtest.data")
+@EntityScan(basePackages = "com.beitechtest.data.entity")
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 public class DatabaseConfig {
 
     @Value("${spring.datasource.driver-class-name}") String driverClassName;
-    @Value("${spring.datasource.url}") String url;
-    @Value("${spring.datasource.username}") String username;
-    @Value("${spring.datasource.password}") String password;
+    @Value("${spring.datasource.jdbc-url}")String jdbcUrl;
+    @Value("${spring.datasource.username}")String username;
+    @Value("${spring.datasource.password}")String password;
 
+    @Primary
     @Bean(name = "dataSource")
     public DataSource getDataSource() {
         DataSource dataSource = DataSourceBuilder
                 .create()
                 .username(username)
                 .password(password)
-                .url(url)
+                .url(jdbcUrl)
                 .driverClassName(driverClassName)
                 .build();
         return dataSource;
     }
+
     @Bean(name = "sessionFactory")
     public SessionFactory getSessionFactory(DataSource dataSource) {
         LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
-        sessionBuilder.scanPackages("com.vflux.rbot.services.account.domain");
+        sessionBuilder.scanPackages("com.beitechtest.data.entity");
         return sessionBuilder.buildSessionFactory();
     }
+
     @Bean(name = "transactionManager")
-    public HibernateTransactionManager getTransactionManager(
-            SessionFactory sessionFactory) {
-        HibernateTransactionManager transactionManager = new HibernateTransactionManager(
-                sessionFactory);
+    public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager(sessionFactory);
         return transactionManager;
     }
+
     @Bean
     public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
         final DataSourceInitializer initializer = new DataSourceInitializer();

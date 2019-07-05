@@ -10,7 +10,7 @@ package com.beitechtest.businesslogic.serviceimpl;
 
 import com.beitechtest.businesslogic.service.IOrderService;
 import com.beitechtest.data.dao.OrderDao;
-import com.beitechtest.data.entities.Order;
+import com.beitechtest.data.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,8 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public boolean saveOrder(Order order) {
-        return false;
+    public Integer saveOrder(Order order) {
+        return ((order.getOrderDetailList().size() > 0 && order.getOrderDetailList().size() <= 5) ?
+                orderDao.save(order): -1);
     }
 }

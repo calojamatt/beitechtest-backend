@@ -9,7 +9,7 @@
 
 package com.beitechtest.businesslogic.service;
 
-import com.beitechtest.data.entities.Customer;
+import com.beitechtest.data.entity.Customer;
 
 import java.util.List;
 

@@ -7,13 +7,14 @@
  */
 package com.beitechtest.data.dao;
 
-import com.beitechtest.data.entities.Product;
+import com.beitechtest.data.entity.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
  * @version: 1.0.1
  * @created: 04/07/2019 3:27 PM
  */
+@Transactional
 @Repository
 public class ProductDao implements IProductDao {
 
@@ -49,15 +51,15 @@ public class ProductDao implements IProductDao {
     @Override
     public Product findByProductId(Integer productId) {
         Session session = this.sessionFactory.getCurrentSession();
-        TypedQuery<Product> query = session.getNamedQuery("Product.findAll");
-        query.setParameter("id", productId);
+        TypedQuery<Product> query = session.getNamedQuery("Product.findByProductId");
+        query.setParameter("productId", productId);
         return query.getSingleResult();
     }
 
     @Override
     public Product findByName(String name) {
         Session session = this.sessionFactory.getCurrentSession();
-        TypedQuery<Product> query = session.getNamedQuery("Product.findAll");
+        TypedQuery<Product> query = session.getNamedQuery("Product.findByName");
         query.setParameter("name", name);
         return query.getSingleResult();
     }
@@ -65,7 +67,7 @@ public class ProductDao implements IProductDao {
     @Override
     public Product findByProductDescription(String productDescription) {
         Session session = this.sessionFactory.getCurrentSession();
-        TypedQuery<Product> query = session.getNamedQuery("Product.findAll");
+        TypedQuery<Product> query = session.getNamedQuery("Product.findByProductDescription");
         query.setParameter("productDescription", productDescription);
         return query.getSingleResult();
     }
@@ -73,7 +75,7 @@ public class ProductDao implements IProductDao {
     @Override
     public Product findByPrice(double price) {
         Session session = this.sessionFactory.getCurrentSession();
-        TypedQuery<Product> query = session.getNamedQuery("Product.findAll");
+        TypedQuery<Product> query = session.getNamedQuery("Product.findByPrice");
         query.setParameter("price", price);
         return query.getSingleResult();
     }

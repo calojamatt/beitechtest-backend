@@ -8,7 +8,7 @@
  */
 package com.beitechtest.data.dao;
 
-import com.beitechtest.data.entities.OrderDetail;
+import com.beitechtest.data.entity.OrderDetail;
 
 import java.util.List;
 
@@ -20,7 +20,9 @@ import java.util.List;
 public interface IOrderDetailDao {
     List<OrderDetail> findAll();
     OrderDetail findByOrderDetailId(Integer orderDetailId);
-    OrderDetail findByProductDescription(String productDescription);
-    OrderDetail findByPrice(double price);
-    OrderDetail findByQuantity(int quantity);
+    List<OrderDetail> findByOrderId(Integer orderId);
+    List<OrderDetail> findByProductId(Integer productId);
+    List<OrderDetail> findByProductDescription(String productDescription);
+    List<OrderDetail> findByPrice(double price);
+    List<OrderDetail> findByQuantity(int quantity);
 }

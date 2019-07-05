@@ -7,13 +7,14 @@
  */
 package com.beitechtest.data.dao;
 
-import com.beitechtest.data.entities.Order;
+import com.beitechtest.data.entity.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +23,7 @@ import java.util.List;
  * @version: 1.0.1
  * @created: 04/07/2019 3:17 PM
  */
+@Transactional
 @Repository
 public class OrderDao implements IOrderDao {
 
@@ -42,7 +44,7 @@ public class OrderDao implements IOrderDao {
     @Override
     public List<Order> findCustomerOrderByDate(Integer customerId, Date startDate, Date endDate) {
         Session session = this.sessionFactory.getCurrentSession();
-        TypedQuery<Order> query = session.getNamedQuery("Order.findAll");
+        TypedQuery<Order> query = session.getNamedQuery("Order.findCustomerOrderByDate");
         query.setParameter("customerId", customerId);
         query.setParameter("startDate", new java.sql.Date(startDate.getTime()));
         query.setParameter("endDate", new java.sql.Date(endDate.getTime()));
@@ -53,7 +55,7 @@ public class OrderDao implements IOrderDao {
     public Order findByOrderId(Integer orderId) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Order> query = session.getNamedQuery("Order.findByOrderId");
-        query.setParameter("id", orderId);
+        query.setParameter("orderId", orderId);
         return query.getSingleResult();
     }
 
@@ -79,5 +81,11 @@ public class OrderDao implements IOrderDao {
         TypedQuery<Order> query = session.getNamedQuery("Order.findByTotal");
         query.setParameter("total", total);
         return query.getSingleResult();
+    }
+
+    @Override
+    public Integer save(Order order) {
+        Session session = this.sessionFactory.getCurrentSession();
+        return (Integer) session.save(order);
     }
 }
