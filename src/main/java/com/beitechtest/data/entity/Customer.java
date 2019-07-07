@@ -7,10 +7,13 @@
 
 package com.beitechtest.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
@@ -45,14 +48,17 @@ public class Customer implements Serializable {
     @Basic(optional = false)
     @Column(name = "email")
     private String email;
+
     @JoinTable(name = "customer_product", joinColumns = {
         @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")}, inverseJoinColumns = {
         @JoinColumn(name = "product_id", referencedColumnName = "product_id")})
     @ManyToMany
     @Fetch(value = FetchMode.JOIN)
-    private Set<Product> productList;
+    private Set<Product> productSet = new HashSet<>();
+
+    @JsonManagedReference(value = "customer")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "customerId")
-    private Set<Order> orderList;
+    private Set<Order> orderSet = new HashSet<>();
 
     public Customer() {
     }
@@ -92,21 +98,21 @@ public class Customer implements Serializable {
     }
 
     @XmlTransient
-    public Set<Product> getProductList() {
-        return productList;
+    public Set<Product> getProductSet() {
+        return productSet;
     }
 
-    public void setProductList(Set<Product> productList) {
-        this.productList = productList;
+    public void setProductSet(Set<Product> productSet) {
+        this.productSet = productSet;
     }
 
     @XmlTransient
-    public Set<Order> getOrderList() {
-        return orderList;
+    public Set<Order> getOrderSet() {
+        return orderSet;
     }
 
-    public void setOrderList(Set<Order> OrderList) {
-        this.orderList = orderList;
+    public void setOrderSet(Set<Order> orderSet) {
+        this.orderSet = orderSet;
     }
 
     @Override

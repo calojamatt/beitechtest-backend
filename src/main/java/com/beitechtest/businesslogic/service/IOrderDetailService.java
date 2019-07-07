@@ -19,4 +19,5 @@ import java.util.List;
 public interface IOrderDetailService {
     List<OrderDetail> findAll();
     OrderDetail findByOrderDetailId(Integer orderDetailId);
+    List<OrderDetail> findByOrderId(Integer orderId);
 }

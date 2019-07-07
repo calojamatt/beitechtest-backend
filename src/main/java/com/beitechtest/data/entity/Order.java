@@ -7,6 +7,10 @@
 
 package com.beitechtest.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -49,10 +53,14 @@ public class Order implements Serializable {
     @Basic(optional = false)
     @Column(name = "total")
     private double total;
+
+    @JsonManagedReference(value = "order")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "orderId")
     private List<OrderDetail> orderDetailList;
+
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     @ManyToOne(optional = false)
+    @JsonBackReference(value = "customer")
     private Customer customerId;
 
     public Order() {

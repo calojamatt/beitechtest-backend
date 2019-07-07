@@ -7,6 +7,9 @@
 
 package com.beitechtest.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -55,12 +58,16 @@ public class OrderDetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "quantity")
     private int quantity;
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
-    @ManyToOne(optional = false)
-    private Product productId;
+
+    @JsonBackReference(value = "order")
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
     @ManyToOne(optional = false)
     private Order orderId;
+
+    @JsonBackReference(value = "product")
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    @ManyToOne(optional = false)
+    private Product productId;
 
     public OrderDetail() {
     }

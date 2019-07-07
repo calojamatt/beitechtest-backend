@@ -7,7 +7,11 @@
 
 package com.beitechtest.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
@@ -29,7 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.name = :name"),
     @NamedQuery(name = "Product.findByProductDescription", query = "SELECT p FROM Product p WHERE p.productDescription = :productDescription"),
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price")
-    //,@NamedQuery(name = "Product.findByCustomerId", query = "SELECT p FROM Product p join p.customerList c  WHERE c.customertId = :custemerId")
 })
 public class Product implements Serializable {
 
@@ -48,10 +51,13 @@ public class Product implements Serializable {
     @Basic(optional = false)
     @Column(name = "price")
     private double price;
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "productList")
-    private Set<Customer> customerList;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "productSet")
+    private Set<Customer> customerSet = new HashSet<>();
+
+    @JsonManagedReference(value = "product")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productId")
-    private Set<OrderDetail> orderDetailList;
+    private Set<OrderDetail> orderDetailSet = new HashSet<>();
 
     public Product() {
     }
@@ -100,21 +106,21 @@ public class Product implements Serializable {
     }
 
     @XmlTransient
-    public Set<Customer> getCustomerList() {
-        return customerList;
+    public Set<Customer> getCustomerSet() {
+        return customerSet;
     }
 
-    public void setCustomerList(Set<Customer> customerList) {
-        this.customerList = customerList;
+    public void setCustomerSet(Set<Customer> customerSet) {
+        this.customerSet = customerSet;
     }
 
     @XmlTransient
-    public Set<OrderDetail> getOrderDetailList() {
-        return orderDetailList;
+    public Set<OrderDetail> getOrderDetailSet() {
+        return orderDetailSet;
     }
 
-    public void setOrderDetailList(Set<OrderDetail> orderDetailList) {
-        this.orderDetailList = orderDetailList;
+    public void setOrderDetailSet(Set<OrderDetail> orderDetailSet) {
+        this.orderDetailSet = orderDetailSet;
     }
 
     @Override

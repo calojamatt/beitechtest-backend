@@ -20,9 +20,8 @@ import java.util.List;
  */
 public interface IProductDao {
     List<Product> findAll();
-    List<Product> findByCustomerId(Integer customerId);
     Product findByProductId(Integer productId);
-    Product findByName(String name);
-    Product findByProductDescription(String productDescription);
-    Product findByPrice(double price);
+    List<Product> findByName(String name);
+    List<Product> findByProductDescription(String productDescription);
+    List<Product> findByPrice(double price);
 }

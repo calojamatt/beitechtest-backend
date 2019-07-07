@@ -10,13 +10,13 @@ package com.beitechtest.businesslogic.serviceimpl;
 
 import com.beitechtest.businesslogic.service.IOrderService;
 import com.beitechtest.data.dao.OrderDao;
+import com.beitechtest.data.dto.OrderCustomerDTO;
 import com.beitechtest.data.entity.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author: CarlosMatt
@@ -41,13 +41,37 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public List<Order> findCustomerOrderByDate(Integer customerId, Date startDate, Date endDate) {
-        return orderDao.findCustomerOrderByDate(customerId, startDate, endDate);
+    public List<OrderCustomerDTO> findOrderByCustomerAndDate(Integer customerId, Date startDate, Date endDate) {
+        List<Order> orderList = orderDao.findCustomerOrderByDate(customerId, startDate, endDate);
+        List<OrderCustomerDTO> orderCustomerDTOList = new ArrayList<>();
+        orderList.forEach(order -> {
+            Set<String> orderListProducts = new HashSet<>();
+            OrderCustomerDTO orderCustomerDTO = new OrderCustomerDTO();
+            orderCustomerDTO.setCreationDate(order.getCreationDate());
+            orderCustomerDTO.setOrderId(order.getOrderId());
+            orderCustomerDTO.setDeliveryAddress(order.getDeliveryAddress());
+            orderCustomerDTO.setTotal(order.getTotal());
+            order.getOrderDetailList().forEach(od -> {
+                StringBuilder orderProducts = new StringBuilder();
+                orderProducts.append(od.getQuantity()).append(" x ")
+                        .append(od.getProductId().getName());
+                orderListProducts.add(orderProducts.toString());
+            });
+            orderCustomerDTO.setProducts(orderListProducts.toString()
+                    .replace("[","")
+                    .replace("]",""));
+            orderCustomerDTOList.add(orderCustomerDTO);
+        });
+        return orderCustomerDTOList;
     }
 
     @Override
     public Integer saveOrder(Order order) {
-        return ((order.getOrderDetailList().size() > 0 && order.getOrderDetailList().size() <= 5) ?
-                orderDao.save(order): -1);
+        if (order.getOrderDetailList().size() > 0 && order.getOrderDetailList().size() <= 5) {
+            return orderDao.save(order);
+        } else if (order.getOrderDetailList().size() > 5) {
+            return -1;
+        }
+        return 0;
     }
 }

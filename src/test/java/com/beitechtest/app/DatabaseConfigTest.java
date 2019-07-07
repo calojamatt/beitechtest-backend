@@ -1,5 +1,6 @@
 package com.beitechtest.app;
 
+import com.beitechtest.app.config.DatabaseConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

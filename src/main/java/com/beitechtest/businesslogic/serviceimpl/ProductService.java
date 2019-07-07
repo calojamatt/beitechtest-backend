@@ -33,7 +33,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> findByCustomerId(Integer customerId) {
-        return productDao.findByCustomerId(customerId);
+    public Product findByProductId(Integer productId) {
+        return productDao.findByProductId(productId);
     }
 }

@@ -6,7 +6,7 @@
  * Derechos de Autor 2015-2019 D&TS ©
  * Todos los Derechos Reservados.
  */
-package com.beitechtest.app;
+package com.beitechtest.app.config;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;

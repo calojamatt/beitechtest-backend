@@ -41,14 +41,6 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public List<Product> findByCustomerId(Integer customerId) {
-        Session session = this.sessionFactory.getCurrentSession();
-        TypedQuery<Product> query = session.getNamedQuery("Product.findByCustomerId");
-        query.setParameter("customerId", customerId);
-        return query.getResultList();
-    }
-
-    @Override
     public Product findByProductId(Integer productId) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Product> query = session.getNamedQuery("Product.findByProductId");
@@ -57,26 +49,26 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public Product findByName(String name) {
+    public List<Product> findByName(String name) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Product> query = session.getNamedQuery("Product.findByName");
         query.setParameter("name", name);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     @Override
-    public Product findByProductDescription(String productDescription) {
+    public List<Product> findByProductDescription(String productDescription) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Product> query = session.getNamedQuery("Product.findByProductDescription");
         query.setParameter("productDescription", productDescription);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
     @Override
-    public Product findByPrice(double price) {
+    public List<Product> findByPrice(double price) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Product> query = session.getNamedQuery("Product.findByPrice");
         query.setParameter("price", price);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 }

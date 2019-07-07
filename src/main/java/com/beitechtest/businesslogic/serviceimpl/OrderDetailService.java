@@ -37,4 +37,9 @@ public class OrderDetailService implements IOrderDetailService {
     public OrderDetail findByOrderDetailId(Integer orderDetailId) {
         return orderDetailDao.findByOrderDetailId(orderDetailId);
     }
+
+    @Override
+    public List<OrderDetail> findByOrderId(Integer orderId) {
+        return orderDetailDao.findByOrderId(orderId);
+    }
 }

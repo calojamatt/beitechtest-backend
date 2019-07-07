@@ -19,5 +19,5 @@ import java.util.List;
  */
 public interface IProductService {
     List<Product> findAll();
-    List<Product> findByCustomerId(Integer customerId);
+    Product findByProductId(Integer productId);
 }

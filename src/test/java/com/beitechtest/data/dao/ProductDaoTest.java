@@ -24,40 +24,33 @@ public class ProductDaoTest {
         Assert.assertTrue(productList.size() >= 0);
     }
 
-    //@Test
-    public void findByCustomerId() throws Exception {
-        int customerId = 26;
-        List<Product> productList = productDao.findByCustomerId(customerId);
-        Assert.assertTrue(productList.size() >= 0);
-    }
-
     @Test
     public void findByProductId() throws Exception {
         int productId = 21;
         Product product = productDao.findByProductId(productId);
         Assert.assertNotNull("Producto Is Null", product);
-        Assert.assertTrue(product.getCustomerList().size() >= 0);
+        Assert.assertTrue(product.getCustomerSet().size() >= 0);
     }
 
     @Test
     public void findByName() throws Exception {
         String name = "Producto 1";
-        Product product = productDao.findByName(name);
-        Assert.assertNotNull("Producto Is Null", product);
+        List<Product> productList = productDao.findByName(name);
+        Assert.assertNotNull("Producto Is Null", productList);
     }
 
     @Test
     public void findByProductDescription() throws Exception {
         String productDescription = "Prueba de producto 1";
-        Product product = productDao.findByProductDescription(productDescription);
-        Assert.assertNotNull("Product Is Null", product);
+        List<Product> productList = productDao.findByProductDescription(productDescription);
+        Assert.assertTrue("Product Is Null", productList.size() > 0);
     }
 
     @Test
     public void findByPrice() throws Exception {
         double price = 30000;
-        Product product = productDao.findByPrice(price);
-        Assert.assertNotNull("Product Is Null", product);
+        List<Product> productList = productDao.findByPrice(price);
+        Assert.assertTrue("Product Is Null", productList.size() > 0);
     }
 
 }

@@ -29,7 +29,7 @@ public class CustomerDaoTest {
         Integer customerId = 26;
         Customer customer = customerDao.findByCustomerId(customerId);
         Assert.assertNotNull("Customer Is Null", customer);
-        Assert.assertTrue("Customer Is Null", customer.getProductList().size() >= 0);
+        Assert.assertTrue("Customer Is Null", customer.getProductSet().size() >= 0);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class CustomerDaoTest {
         String name = "Carlos A Maturana M";
         Customer customer = customerDao.findByName(name);
         Assert.assertNotNull("Customer Is Null", customer);
-        Assert.assertTrue("Customer Is Null", customer.getProductList().size() >= 0);
+        Assert.assertTrue("Customer Is Null", customer.getProductSet().size() >= 0);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class CustomerDaoTest {
         String email = "carlos.maturana@dytssol.com";
         Customer customer = customerDao.findByEmail(email);
         Assert.assertNotNull("Customer Is Null", customer);
-        Assert.assertTrue("Customer Is Null", customer.getProductList().size() >= 0);
+        Assert.assertTrue("Customer Is Null", customer.getProductSet().size() >= 0);
     }
 
 }
