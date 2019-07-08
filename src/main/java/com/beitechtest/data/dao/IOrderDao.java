@@ -23,8 +23,8 @@ public interface IOrderDao {
     List<Order> findAll();
     List<Order> findCustomerOrderByDate(Integer customerId, Date startDate, Date endDate);
     Order findByOrderId(Integer orderId);
-    Order findByCreationDate(Date creationDate);
-    Order findByDeliveryAddress(String deliveryAddress);
-    Order findByTotal(double total);
+    List<Order> findByCreationDate(Date creationDate);
+    List<Order> findByDeliveryAddress(String deliveryAddress);
+    List<Order> findByTotal(double total);
     Integer save(Order order);
 }

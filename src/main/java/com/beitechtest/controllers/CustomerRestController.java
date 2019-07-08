@@ -1,7 +1,7 @@
 /**
  * beitechtest-backend
  * CustomerRestController.java
- * <p>
+ *
  * Derechos de Autor 2015-2019 D&TS ©
  * Todos los Derechos Reservados.
  */
@@ -24,8 +24,13 @@ import java.util.List;
 public class CustomerRestController {
 
     @Autowired
-    ICustomerService customerService;
+    private ICustomerService customerService;
 
+    /**
+     * Returns a list of all customer in json format
+     *
+     * @return <code>List<Customer></code>
+     */
     @GetMapping(value = "/beitechtest/customer/listAllCustomer")
     public List<Customer> listAllCustomer() {
         return customerService.findAll();

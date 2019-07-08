@@ -21,25 +21,45 @@ import java.util.List;
  * @version: 1.0.1
  * @created: 04/07/2019 4:06 PM
  */
-@Service
 @Transactional
+@Service
 public class OrderDetailService implements IOrderDetailService {
 
     @Autowired
-    OrderDetailDao orderDetailDao;
+    private OrderDetailDao orderDetailDao;
 
+    /**
+     * Returns a list of All OrderDetail
+     *
+     * @return <code>List<OrderDetail></code>
+     */
     @Override
     public List<OrderDetail> findAll() {
         return orderDetailDao.findAll();
     }
 
+    /**
+     * Return an OrderDetail
+     *
+     * @param orderDetailId <pre>@code Integer</pre>
+     *
+     * @return <code>OrderDetail</code>
+     */
     @Override
     public OrderDetail findByOrderDetailId(Integer orderDetailId) {
         return orderDetailDao.findByOrderDetailId(orderDetailId);
     }
 
+    /**
+     * Return a List of OrderDetail
+     *
+     * @param orderId <pre>@code Integer</pre>
+     *
+     * @return <code>List<OrderDetail></code>
+     */
     @Override
     public List<OrderDetail> findByOrderId(Integer orderId) {
         return orderDetailDao.findByOrderId(orderId);
     }
+
 }

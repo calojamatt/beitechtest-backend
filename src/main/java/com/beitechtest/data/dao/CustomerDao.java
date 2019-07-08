@@ -33,6 +33,12 @@ public class CustomerDao implements ICustomerDao {
         this.sessionFactory = sessionFactory;
     }
 
+
+    /**
+     * Returns a list of All Customer
+     *
+     * @return <code>List<Customer></code>
+     */
     @Override
     public List<Customer> findAll() {
         Session session = this.sessionFactory.getCurrentSession();
@@ -40,6 +46,13 @@ public class CustomerDao implements ICustomerDao {
         return query.getResultList();
     }
 
+    /**
+     * Return a Customer
+     *
+     * @param customerId <pre>@code Integer</pre>
+     *
+     * @return <code>Customer</code>
+     */
     @Override
     public Customer findByCustomerId(Integer customerId) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -48,6 +61,13 @@ public class CustomerDao implements ICustomerDao {
         return query.getSingleResult();
     }
 
+    /**
+     * Return a Customer
+     *
+     * @param name <pre>@code String</pre>
+     *
+     * @return <code>Customer</code>
+     */
     @Override
     public Customer findByName(String name) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -56,6 +76,13 @@ public class CustomerDao implements ICustomerDao {
         return query.getSingleResult();
     }
 
+    /**
+     * Return a Customer
+     *
+     * @param v <pre>@code String</pre>
+     *
+     * @return <code>Customer</code>
+     */
     @Override
     public Customer findByEmail(String email) {
         Session session = this.sessionFactory.getCurrentSession();

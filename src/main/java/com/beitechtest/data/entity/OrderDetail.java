@@ -7,22 +7,10 @@
 
 package com.beitechtest.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.*;
 
 /**
  *
@@ -32,7 +20,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "order_detail")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OrderDetail.findAll", query = "SELECT o FROM OrderDetail o"),
     @NamedQuery(name = "OrderDetail.findByOrderDetailId", query = "SELECT o FROM OrderDetail o WHERE o.orderDetailId = :orderDetailId"),
@@ -59,14 +46,14 @@ public class OrderDetail implements Serializable {
     @Column(name = "quantity")
     private int quantity;
 
-    @JsonBackReference(value = "order")
+    //@JsonIgnore
     @JoinColumn(name = "order_id", referencedColumnName = "order_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     private Order orderId;
 
-    @JsonBackReference(value = "product")
+    @JsonManagedReference(value = "product")
     @JoinColumn(name = "product_id", referencedColumnName = "product_id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     private Product productId;
 
     public OrderDetail() {

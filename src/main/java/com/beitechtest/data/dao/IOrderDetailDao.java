@@ -25,4 +25,5 @@ public interface IOrderDetailDao {
     List<OrderDetail> findByProductDescription(String productDescription);
     List<OrderDetail> findByPrice(double price);
     List<OrderDetail> findByQuantity(int quantity);
+    Integer saveOrderDetail(OrderDetail orderDetail);
 }

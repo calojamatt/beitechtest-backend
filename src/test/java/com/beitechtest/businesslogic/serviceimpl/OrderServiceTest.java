@@ -1,22 +1,24 @@
 package com.beitechtest.businesslogic.serviceimpl;
 
 import com.beitechtest.app.BeitechtestcammApplication;
+import com.beitechtest.businesslogic.converters.OrderDeserializer;
 import com.beitechtest.data.dto.OrderCustomerDTO;
 import com.beitechtest.data.entity.Customer;
 import com.beitechtest.data.entity.Order;
 import com.beitechtest.data.entity.OrderDetail;
 import com.beitechtest.data.entity.Product;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -30,6 +32,7 @@ public class OrderServiceTest {
     @Test
     public void findAll() throws Exception {
         List<Order> orderList = orderService.findAll();
+        System.out.println(orderList);
         assertTrue("OrderList is empty", orderList.size() > 0);
     }
 
@@ -54,35 +57,15 @@ public class OrderServiceTest {
 
     @Test
     public void saveOrder() throws Exception {
-        Customer customer = new Customer();
-        customer.setCustomerId(26);
-        customer.setName("Carlos A Maturana M");
-        customer.setEmail("carlos.maturana@dytssol.com");
+        String orderJson = "{\"orderId\":null,\"creationDate\":\"2019-07-07\"," +
+                "\"deliveryAddress\":\"Cra 42A # 80B-101 Ap. 4B\",\"total\":30000," +
+                "\"customerId\":26,\"orderDetailSet\":[{\"orderDetailId\":1," +
+                "\"productDescription\":\"Producto 1 Prueba\",\"price\":30000," +
+                "\"quantity\":1,\"productId\":21},{\"orderDetailId\":2," +
+                "\"productDescription\":\"Producto 22 Prueba\",\"price\":30000," +
+                "\"quantity\":1,\"productId\":22}]}";
 
-        Product product = new Product();
-        product.setProductId(21);
-        product.setName("Producto 1");
-        product.setProductDescription("Producto 1 Prueba");
-        product.setPrice(30000);
-
-        Order order = new Order();
-        order.setCreationDate(new Date());
-        order.setDeliveryAddress("Cra 51 # 79-34 Of. 506");
-        order.setTotal(30000);
-        order.setCustomerId(customer);
-
-        List<OrderDetail> orderDetailList = new ArrayList<>();
-        OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setOrderId(order);
-        orderDetail.setProductId(product);
-        orderDetail.setProductDescription(product.getProductDescription());
-        orderDetail.setQuantity(1);
-        orderDetail.setPrice(product.getPrice());
-        orderDetailList.add(orderDetail);
-
-        order.setOrderDetailList(orderDetailList);
-
-        Integer orderId = orderService.saveOrder(order);
+        Integer orderId = orderService.saveOrder(orderJson);
         assertTrue("Order Is Null", orderId > 0);
     }
 

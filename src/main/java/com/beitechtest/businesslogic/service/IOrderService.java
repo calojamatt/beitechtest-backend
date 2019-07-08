@@ -12,6 +12,7 @@ package com.beitechtest.businesslogic.service;
 import com.beitechtest.data.dto.OrderCustomerDTO;
 import com.beitechtest.data.entity.Order;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -24,5 +25,5 @@ public interface IOrderService {
     List<Order> findAll();
     Order findByOrderId(Integer orderId);
     List<OrderCustomerDTO> findOrderByCustomerAndDate(Integer customerId, Date startDate, Date endDate);
-    Integer saveOrder(Order order);
+    Integer saveOrder(String orderJson) throws IOException;
 }

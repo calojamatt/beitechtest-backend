@@ -8,15 +8,11 @@
 package com.beitechtest.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,7 +22,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "product")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
     @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
@@ -52,10 +47,11 @@ public class Product implements Serializable {
     @Column(name = "price")
     private double price;
 
+    @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "productSet")
     private Set<Customer> customerSet = new HashSet<>();
 
-    @JsonManagedReference(value = "product")
+    @JsonBackReference(value = "product")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "productId")
     private Set<OrderDetail> orderDetailSet = new HashSet<>();
 
@@ -105,7 +101,6 @@ public class Product implements Serializable {
         this.price = price;
     }
 
-    @XmlTransient
     public Set<Customer> getCustomerSet() {
         return customerSet;
     }
@@ -114,7 +109,6 @@ public class Product implements Serializable {
         this.customerSet = customerSet;
     }
 
-    @XmlTransient
     public Set<OrderDetail> getOrderDetailSet() {
         return orderDetailSet;
     }

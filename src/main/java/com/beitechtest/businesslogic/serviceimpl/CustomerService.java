@@ -13,6 +13,7 @@ import com.beitechtest.data.entity.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -20,17 +21,30 @@ import java.util.List;
  * @version: 1.0.1
  * @created: 04/07/2019 3:59 PM
  */
+@Transactional
 @Service
 public class CustomerService implements ICustomerService {
 
     @Autowired
-    CustomerDao customerDao;
+    private CustomerDao customerDao;
 
+    /**
+     * Returns a list of All customers
+     *
+     * @return <code>List<Customer></code>
+     */
     @Override
     public List<Customer> findAll() {
         return customerDao.findAll();
     }
 
+    /**
+     * Return a Customer
+     *
+     * @param customerId <pre>@code Integer</pre>
+     *
+     * @return <code>Customer</code>
+     */
     @Override
     public Customer findByCustomerId(Integer customerId) {
         return customerDao.findByCustomerId(customerId);

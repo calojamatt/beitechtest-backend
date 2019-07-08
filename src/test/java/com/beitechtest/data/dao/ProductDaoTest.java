@@ -21,6 +21,7 @@ public class ProductDaoTest {
     @Test
     public void findAll() throws Exception {
         List<Product> productList = productDao.findAll();
+        System.out.println(productList);
         Assert.assertTrue(productList.size() >= 0);
     }
 

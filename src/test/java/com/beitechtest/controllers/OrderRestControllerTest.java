@@ -106,38 +106,16 @@ public class OrderRestControllerTest {
 
     @Test
     public void saveOrder() throws Exception {
-        Customer customer = new Customer();
-        customer.setCustomerId(26);
-        customer.setName("Carlos A Maturana M");
-        customer.setEmail("carlos.maturana@dytssol.com");
-
-        Product product = new Product();
-        product.setProductId(21);
-        product.setName("Producto 1");
-        product.setProductDescription("Producto 1 Prueba");
-        product.setPrice(30000);
-
-        Order orderSave = new Order();
-        orderSave.setCreationDate(new Date());
-        orderSave.setDeliveryAddress("Cra 42A # 80B-101 Ap. 4B");
-        orderSave.setTotal(30000);
-        orderSave.setCustomerId(customer);
-
-        List<OrderDetail> orderDetailList = new ArrayList<>();
-        OrderDetail orderDetail = new OrderDetail();
-        orderDetail.setOrderId(orderSave);
-        orderDetail.setProductId(product);
-        orderDetail.setProductDescription(product.getProductDescription());
-        orderDetail.setQuantity(1);
-        orderDetail.setPrice(product.getPrice());
-        orderDetailList.add(orderDetail);
-
-        orderSave.setOrderDetailList(orderDetailList);
-
-        String contentJson = new ObjectMapper().writeValueAsString(orderSave);
+        String orderJson = "{\"orderId\":null,\"creationDate\":\"2019-07-07\"," +
+                "\"deliveryAddress\":\"Cra 42A # 80B-101 Ap. 4B\",\"total\":30000," +
+                "\"customerId\":26,\"orderDetailSet\":[{\"orderDetailId\":1," +
+                "\"productDescription\":\"Producto 1 Prueba\",\"price\":30000," +
+                "\"quantity\":1,\"productId\":21},{\"orderDetailId\":2," +
+                "\"productDescription\":\"Producto 22 Prueba\",\"price\":30000," +
+                "\"quantity\":1,\"productId\":22}]}";
 
         mockMvc.perform(post("/beitechtest/order/saveOrder")
-                .content(contentJson)
+                .content(orderJson)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());

@@ -7,16 +7,12 @@
 
 package com.beitechtest.data.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -26,7 +22,6 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "\"order\"")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Order.findAll", query = "SELECT o FROM Order o"),
     @NamedQuery(name = "Order.findByOrderId", query = "SELECT o FROM Order o WHERE o.orderId = :orderId"),
@@ -54,14 +49,14 @@ public class Order implements Serializable {
     @Column(name = "total")
     private double total;
 
-    @JsonManagedReference(value = "order")
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "orderId")
-    private List<OrderDetail> orderDetailList;
-
+    @JsonManagedReference(value = "customer")
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
-    @ManyToOne(optional = false)
-    @JsonBackReference(value = "customer")
+    @ManyToOne(optional = false, cascade = CascadeType.REFRESH)
     private Customer customerId;
+
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH, mappedBy = "orderId")
+    private Set<OrderDetail> orderDetailSet;
 
     public Order() {
     }
@@ -109,13 +104,12 @@ public class Order implements Serializable {
         this.total = total;
     }
 
-    @XmlTransient
-    public List<OrderDetail> getOrderDetailList() {
-        return orderDetailList;
+    public Set<OrderDetail> getOrderDetailSet() {
+        return orderDetailSet;
     }
 
-    public void setOrderDetailList(List<OrderDetail> orderDetailList) {
-        this.orderDetailList = orderDetailList;
+    public void setOrderDetailSet(Set<OrderDetail> orderDetailSet) {
+        this.orderDetailSet = orderDetailSet;
     }
 
     public Customer getCustomerId() {

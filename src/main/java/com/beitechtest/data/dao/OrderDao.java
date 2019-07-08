@@ -34,6 +34,11 @@ public class OrderDao implements IOrderDao {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Return a list of All Order
+     *
+     * @return <code>List<Order></code>
+     */
     @Override
     public List<Order> findAll() {
         Session session = this.sessionFactory.getCurrentSession();
@@ -41,6 +46,15 @@ public class OrderDao implements IOrderDao {
         return query.getResultList();
     }
 
+    /**
+     * Returns a list of data from Order
+     *
+     * @param customerId <pre>@code Integer</pre>
+     * @param startDate <pre>@code Date</pre> startDate must be minor then endDate
+     * @param endDate <pre>@code Date</pre> endDate must be greater then startDate
+     *
+     * @return <code>List<OrderCustomerDTO></code>
+     */
     @Override
     public List<Order> findCustomerOrderByDate(Integer customerId, Date startDate, Date endDate) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -51,6 +65,13 @@ public class OrderDao implements IOrderDao {
         return query.getResultList();
     }
 
+    /**
+     * Return an Order
+     *
+     * @param orderId <pre>@code Integer</pre>
+     *
+     * @return <code>Order</code>
+     */
     @Override
     public Order findByOrderId(Integer orderId) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -59,30 +80,58 @@ public class OrderDao implements IOrderDao {
         return query.getSingleResult();
     }
 
+    /**
+     * Returns a list of Order
+     *
+     * @param creationDate <pre>@code Date</pre>
+     *
+     * @return <code>List<Order></code>
+     */
     @Override
-    public Order findByCreationDate(Date creationDate) {
+    public List<Order> findByCreationDate(Date creationDate) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Order> query = session.getNamedQuery("Order.findByCreationDate");
         query.setParameter("creationDate", new java.sql.Date(creationDate.getTime()));
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
+    /**
+     * Returns a list of Order
+     *
+     * @param deliveryAddress <pre>@code String</pre>
+     *
+     * @return <code>List<Order></code>
+     */
     @Override
-    public Order findByDeliveryAddress(String deliveryAddress) {
+    public List<Order> findByDeliveryAddress(String deliveryAddress) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Order> query = session.getNamedQuery("Order.findByDeliveryAddress");
         query.setParameter("deliveryAddress", deliveryAddress);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
+    /**
+     * Returns a list of Order
+     *
+     * @param total <pre>@code double</pre>
+     *
+     * @return <code>List<Order></code>
+     */
     @Override
-    public Order findByTotal(double total) {
+    public List<Order> findByTotal(double total) {
         Session session = this.sessionFactory.getCurrentSession();
         TypedQuery<Order> query = session.getNamedQuery("Order.findByTotal");
         query.setParameter("total", total);
-        return query.getSingleResult();
+        return query.getResultList();
     }
 
+    /**
+     * Returns orderId if data is saved successfully, elsewhere returns 0
+     *
+     * @param order <pre>@code Order</pre>
+     *
+     * @return <code>Integer</code>
+     */
     @Override
     public Integer save(Order order) {
         Session session = this.sessionFactory.getCurrentSession();

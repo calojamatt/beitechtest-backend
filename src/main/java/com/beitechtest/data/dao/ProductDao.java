@@ -33,6 +33,11 @@ public class ProductDao implements IProductDao {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Return a list of All Product
+     *
+     * @return <code>List<Product></code>
+     */
     @Override
     public List<Product> findAll() {
         Session session = this.sessionFactory.getCurrentSession();
@@ -40,6 +45,13 @@ public class ProductDao implements IProductDao {
         return query.getResultList();
     }
 
+    /**
+     * Return a Product
+     *
+     * @param productId <pre>@code Integer</pre>
+     *
+     * @return <code>Product</code>
+     */
     @Override
     public Product findByProductId(Integer productId) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -48,6 +60,13 @@ public class ProductDao implements IProductDao {
         return query.getSingleResult();
     }
 
+    /**
+     * Return a list of Products
+     *
+     * @param name <pre>@code String</pre>
+     *
+     * @return <code>List<Product></code>
+     */
     @Override
     public List<Product> findByName(String name) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -56,6 +75,13 @@ public class ProductDao implements IProductDao {
         return query.getResultList();
     }
 
+    /**
+     * Returns a list of Products
+     *
+     * @param productDescription <pre>@code String</pre>
+     *
+     * @return <code>List<Product></code>
+     */
     @Override
     public List<Product> findByProductDescription(String productDescription) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -64,6 +90,13 @@ public class ProductDao implements IProductDao {
         return query.getResultList();
     }
 
+    /**
+     * Returns a list of Products
+     *
+     * @param price <pre>@code double</pre>
+     *
+     * @return <code>List<Product></code>
+     */
     @Override
     public List<Product> findByPrice(double price) {
         Session session = this.sessionFactory.getCurrentSession();
