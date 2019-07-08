@@ -28,7 +28,6 @@ import static org.mockito.BDDMockito.given;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BeitechtestcammApplication.class)
 @AutoConfigureMockMvc
-//@TestPropertySource(locations = "classpath:application-dev.properties")
 public class CustomerRestControllerTest {
 
     @Autowired

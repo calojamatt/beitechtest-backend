@@ -35,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = BeitechtestcammApplication.class)
 @AutoConfigureMockMvc
-@TestPropertySource(locations = "classpath:application-dev.properties")
 public class OrderRestControllerTest {
 
     @Autowired
