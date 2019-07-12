@@ -1,5 +1,4 @@
 /**
- * Development and Technologies Solutions S.A.S
  * beitechtest-backend
  * ProductService.java
  * <p>

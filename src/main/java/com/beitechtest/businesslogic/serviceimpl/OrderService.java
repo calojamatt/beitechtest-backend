@@ -1,5 +1,4 @@
 /**
- * Development and Technologies Solutions S.A.S
  * beitechtest-backend
  * OrderService.java
  * <p>
@@ -101,9 +100,9 @@ public class OrderService implements IOrderService {
 
     /**
      * Returns orderId if data is saved successfully.
-     * Returns -1 if quantity of product in the list in OrderDetail is greater than 5
-     * or if is there any product that do not belongs to customer in the Order
-     * Return 0 if the list in OrderDetal is null or empty
+     * Returns -1 if total of product in the list of OrderDetail is greater than 5
+     * or if there is any products that do not belongs to customer in the Order
+     * Return 0 if the list of OrderDetal is null or empty
      *
      * @param orderJson <pre>@code String</pre> data must be in Json format
      *
